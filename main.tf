@@ -43,8 +43,8 @@ resource "azurerm_subnet" "mtc-subnet" {
   address_prefixes     = ["10.123.1.0/24"]
 }
 
-#security rules
-resource "azurerm_network_security_rule" "mtc-sg" {
+#security group
+resource "azurerm_network_security_group" "mtc-sg" {
   name                = "mtc-sg"
   location            = azurerm_resource_group.mtc-rg.location
   resource_group_name = azurerm_resource_group.mtc-rg.name
@@ -53,3 +53,20 @@ resource "azurerm_network_security_rule" "mtc-sg" {
     enviroment = "dev"
   }
 }
+
+#security rule
+resource "azurerm_network_security_rule" "mtc-dev-rule" {
+  name                                = "mtc-dev-rule"
+  priority                            = 100
+  direction                           = "Inbound"
+  access                              = "Allow"
+  protocol                            = "*"
+  source_port_range                   = "*"
+  destination_port_range              = "*"
+  source_address_prefix               = "*"
+  destination_address_prefix           = "*"
+  resource_group_name                 = azurerm_resource_group.mtc-rg.name
+  network_security_group_name = azurerm_network_security_group.mtc-sg.name
+}
+
+#associate out security group with our sub-net
