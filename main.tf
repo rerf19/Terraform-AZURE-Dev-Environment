@@ -56,17 +56,21 @@ resource "azurerm_network_security_group" "mtc-sg" {
 
 #security rule
 resource "azurerm_network_security_rule" "mtc-dev-rule" {
-  name                                = "mtc-dev-rule"
-  priority                            = 100
-  direction                           = "Inbound"
-  access                              = "Allow"
-  protocol                            = "*"
-  source_port_range                   = "*"
-  destination_port_range              = "*"
-  source_address_prefix               = "*"
-  destination_address_prefix           = "*"
-  resource_group_name                 = azurerm_resource_group.mtc-rg.name
+  name                        = "mtc-dev-rule"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.mtc-rg.name
   network_security_group_name = azurerm_network_security_group.mtc-sg.name
 }
 
 #associate out security group with our sub-net
+resource "azurerm_subnet_network_security_group_association" "mtc-sga" {
+  subnet_id                          = azurerm_subnet.mtc-subnet.id
+  network_security_group_id = azurerm_network_security_group.mtc-sg.id
+}
