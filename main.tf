@@ -115,6 +115,8 @@ resource "azurerm_linux_virtual_machine" "mtc-vm" {
   admin_username        = "adminuser"
   network_interface_ids = [azurerm_network_interface.mtc_nic.id]
 
+  //custom_data = file("customdata.sh")
+
   admin_ssh_key {
     username   = "adminuser"
     public_key = file("~/.ssh/mtcazurekey.pub")
