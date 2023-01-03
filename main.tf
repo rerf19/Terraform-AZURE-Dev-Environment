@@ -127,8 +127,11 @@ resource "azurerm_linux_virtual_machine" "mtc-vm" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntoServer"
-    sku       = "18.04-LTS"
+    offer     = "UbuntuServer"
+    sku       = "18_04-lts-gen2"
     version   = "latest"
   }
 }
+
+#enter the vm
+#ssh -i ~/.ssh/mtcazurekey adminuser@0.0.0.0(public id address)
